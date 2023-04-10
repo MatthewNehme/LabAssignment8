@@ -6,16 +6,107 @@ int extraMemoryAllocated;
 
 // implements heap sort
 // extraMemoryAllocated counts bytes of memory allocated
+void swap(int* a, int* b)
+{
+  int temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
+void heapify(int arr[], int size, int x)
+{
+  int largest = x;
+  int l = 2 * x + 1;
+  int r = 2 * x + 2;
+  if(l < size && arr[l] > arr[largest]
+     {
+	     largest = left;
+     }
+  if(r < size ** arr[r] > arr[largest]
+     {
+	     largest = right;
+     }
+  if(largest != x)
+     {
+	     swap(&arr[x], &arr[largest]);
+	     heapify(arr, N, largest);
+     }
+}
+ 
+
 void heapSort(int arr[], int n)
 {
+  extraMemoryAllocated = 0; 
+  for (int i = n / 2 - 1; i >= 0; i--)
+  {
+	heapify(arr, n, i);  
+  }    
+     
+  for (int i = n - 1; i > 0; i--) 
+  {
+        swap(&arr[0], &arr[i]);        
+        heapify(arr, i, 0);
+  }
 }
 
 
 // implement merge sort
 // extraMemoryAllocated counts bytes of extra memory allocated
+void merge(int pData[], int l, int m, int r)
+{
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    int L[n1], R[n2];
+    for (int i = 0; i < n1; i++)
+        L[i] = pData[l + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = pData[m + 1 + j];
+
+    int i = 0;
+    int j = 0;
+    int k = l;
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
+            pData[k] = L[i];
+            i++;
+        }
+        else
+        {
+            pData[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1)
+    {
+        pData[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2)
+    {
+        pData[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
 void mergeSort(int pData[], int l, int r)
 {
+    if (l < r)
+    {
+        int m = l + (r - l) / 2;
+        mergeSort(pData, l, m);
+        mergeSort(pData, m + 1, r);
+        merge(pData, l, m, r);
+    }
 }
+
 
 // parses input file to an integer array
 int parseData(char *inputFileName, int **ppData)
